@@ -1,6 +1,6 @@
 Nebraska's Entrepreneurial Ecosystem
 -----------------
-Welcome! This project was built off of [this project](https://github.com/sahat/hackathon-starter) - their incredible README is copied below.
+Welcome! This project was built off of [this project](https://github.com/sahat/hackathon-starter) - their incredible README is copied after the following sections.
 
 ## Setup - What Do I Need to Do?
 See base project's README below. Highlights: create `data` folder, install mongodb (easiest on Mac OSX terminal through homebrew), install nodemon (also for terminal), and download this project. Current setup will run on localhost:8080. The base project wrote great instructions on how to do initial runs, so check that out.
