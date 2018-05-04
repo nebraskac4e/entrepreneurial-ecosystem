@@ -1,10 +1,10 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  service: 'SendGrid',
+  service: 'gmail',
   auth: {
-    user: process.env.SENDGRID_USER,
-    pass: process.env.SENDGRID_PASSWORD
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASSWORD
   }
 });
 
@@ -23,7 +23,7 @@ exports.getContact = (req, res) => {
 
 /**
  * POST /contact
- * Send a contact form via Nodemailer.
+ * Send a contact form via Gmail.
  */
 exports.postContact = (req, res) => {
   let fromName;
@@ -50,9 +50,9 @@ exports.postContact = (req, res) => {
   }
 
   const mailOptions = {
-    to: 'your@email.com',
+    to: 'nebraskac4e@gmail.com',
     from: `${fromName} <${fromEmail}>`,
-    subject: 'Contact Form | Hackathon Starter',
+    subject: 'Contact Form | Nebraska\'s Entrepreneurial Resources',
     text: req.body.message
   };
 

@@ -1,5 +1,39 @@
+Nebraska's Entrepreneurial Ecosystem
+-----------------
+Welcome! This project was built off of [this project](https://github.com/sahat/hackathon-starter) - their incredible README is copied below.
+
+## Setup - What Do I Need to Do?
+See base project's README below. Highlights: create `data` folder, install mongodb (easiest on Mac OSX terminal through homebrew), install nodemon (also for terminal), and download this project. Current setup will run on localhost:8080. The base project wrote great instructions on how to do initial runs, so check that out.
+
+You will need to uncomment the signup logic in `views/account/login.pug`. As a temporary fix, this signup is commented so only an admin would create an account, and then no one else would be able to create an account. Anyone with an account counts as an admin. This means they can access the Admin Portal.
+
+You will also need to reinsert data into the mongo database.
+Starter code - after you've run the project, mongoose (mongo ORM) should set up a `resources` table. Access via `mongo` on command line.
+1. db.resources.insert({name : "Nebraska Center for Entrepreneurship", latitude : 40.820364, longitude : -96.700589, grouping : "Education", description : "Nebraska Center for Entrepreneurship provides five core services to the university and greater community: teaching, coworking, mentorship, competition and research. Its goal is to connect students, faculty and community members with the resources they need to create and manage successful businesses.", displayOnMap : true, displayOnList : true})
+2. db.resources.insert({"name" : "Lincoln Chamber of Commerce", "latitude" : 40.808315, "longitude" : -96.704834, "grouping" : "Association or Nonprofit", "description" : "Lincoln Chamber of Commerce is the primary advocate for business growth in Lincoln and works with the government and education. The Chamber represents 1,600 companies and 300,000 employees across Lincoln.", "displayOnMap" : true, "displayOnList" : true })
+
+Your admin page will say "No resources found" until an initial entry is created in the database (via command line).
+
+## Functionality - What Can I Do?
+As a regular user
+You can view the map and lists of resources, and do anything on the home page. You also have a link to the Contact page, where you can request resource(s) be added.
+
+As an admin
+Everything that a regular user can do (though contact page is hidden but usable), plus: access to the Admin Portal. On this page, you can create, read, update, and delete resources. These changes then reflect on the map and lists on the home page. To add a new resource, click the '+' button, enter your fields, and then press that row's 'save' button. To update any resource, click in any field(s) in the row and make your changes, then press that row's 'save' button. After the initial addition, the name field is uneditable. This is so the data can still be referenced in the database in order to save changes back. Simply delete the row if you mistyped the resource name, and restart. To delete a resource, click the 'x' button. The groupings are required to be one of seven possible options. See the list below the table to know what you can include. This helps populate the lists according to type, and resources will not be saved if they do not have one of these seven groupings labeled.
+
+## What to Do Next?
+1. Change the .env.example file to have the .env extension. This file should be hidden (i.e., not committed to the GitHub repo). Keep this safe.
+2. Update the mongoose model for Resource (`models/Resource.js`) to store an address instead of latitude and longitude. This will have a cascading effect on other necessary changes: home.pug will need to call some API to translate this address to latitude and longitude (for the map and for the lists), and admin.pug will need its table (and associated script) updated to support the updated table columns.
+3. Either integrate this site into one that is already being hosted, or purchase a domain and hosting for this site.
+**Note:** When you're ready to deploy to production don't forget to
+add your new url to *Authorized Javascript origins* and *Authorized redirect URI*,
+e.g. `http://my-awesome-app.herokuapp.com` and
+`http://my-awesome-app.herokuapp.com/auth/google/callback` respectively.
+The same goes for other providers.
+4. Enter all the resources!
+
 ![](https://lh4.googleusercontent.com/-PVw-ZUM9vV8/UuWeH51os0I/AAAAAAAAD6M/0Ikg7viJftQ/w1286-h566-no/hackathon-starter-logo.jpg)
-Hackathon Starter 
+Hackathon Starter
 =======================
 
 [![Dependency Status](https://david-dm.org/sahat/hackathon-starter/status.svg?style=flat)](https://david-dm.org/sahat/hackathon-starter) [![Build Status](https://travis-ci.org/sahat/hackathon-starter.svg?branch=master)](https://travis-ci.org/sahat/hackathon-starter) [![Join the chat at https://gitter.im/sahat/hackathon-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/hackathon-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -180,7 +214,7 @@ them with *your credentials* when you are ready to deploy an app.
 - Click on **Create Client ID** button
 - Copy and paste *Client ID* and *Client secret* keys into `.env`
 
-**Note:** When you ready to deploy to production don't forget to
+**Note:** When you're ready to deploy to production don't forget to
 add your new url to *Authorized Javascript origins* and *Authorized redirect URI*,
 e.g. `http://my-awesome-app.herokuapp.com` and
 `http://my-awesome-app.herokuapp.com/auth/google/callback` respectively.
@@ -195,7 +229,7 @@ The same goes for other providers.
 - Enter a new name for your app
 - Click on the **Create App ID** button
 - Find the Facebook Login Product and click on **Facebook Login**
-- Instead of going through their Quickstart, click on **Settings** for your app in the top left corner 
+- Instead of going through their Quickstart, click on **Settings** for your app in the top left corner
 - Copy and paste *App ID* and *App Secret* keys into `.env`
 - **Note:** *App ID* is **FACEBOOK_ID**, *App Secret* is **FACEBOOK_SECRET** in `.env`
 - Enter `localhost` under *App Domains*
@@ -1126,7 +1160,7 @@ var YYYY = now.getFullYear();
 
 if (DD < 10) {
   DD = '0' + DD;
-} 
+}
 
 if (MM < 10) {
   MM = '0' + MM;
@@ -1208,13 +1242,13 @@ User.aggregate({ $group: { _id: null, total: { $sum: '$votes' } } }, (err, votes
 Docker
 ----------
 
-You will need docker and docker-compose installed to build the application. 
+You will need docker and docker-compose installed to build the application.
 
 - [Docker installation](https://docs.docker.com/engine/installation/)
 
 - [Common problems setting up docker](https://docs.docker.com/toolbox/faqs/troubleshoot/)
 
-After installing docker, start the application with the following commands : 
+After installing docker, start the application with the following commands :
 
 ```
 # To build the project for the first time or when you add dependencies
@@ -1412,7 +1446,7 @@ Be sure to check out the full list of Watson services to forwarder enhance your 
 
 **<img src="https://wbi.mybluemix.net/icons/text-to-speech.svg?version=2" width="25"> [Text to Speech](https://www.ibm.com/watson/services/text-to-speech/)** - Convert written text into natural sounding audio in a variety of languages and voices.  
 
-**<img src="https://wbi.mybluemix.net/icons/tone-analyzer.svg?version=2" width="25"> [Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/)** - Understand emotions, social tendencies and perceived writing style. 
+**<img src="https://wbi.mybluemix.net/icons/tone-analyzer.svg?version=2" width="25"> [Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/)** - Understand emotions, social tendencies and perceived writing style.
 
 **<img src="https://kpprod1.alchemyapi.com/images/vis_rec.svg" width="25"> [Visual Recognition](https://www.ibm.com/watson/services/visual-recognition/)** - Tag, classify and search visual content using machine learning.
 
@@ -1535,7 +1569,7 @@ Changelog
 - Flash an error message when updating email to that which is already taken
 - Removing an email address during profile update is no longer possible
 - PayPal API example now uses *return_url* and *cancel_url* from `.env`
-- Added client-side `required=true` attributes to input fields 
+- Added client-side `required=true` attributes to input fields
 - Fixed broken `show()` function in the GitHub API example
 - Fixed YQL query in the Yahoo Weather API example
 - Fixed *Can't set headers after they are sent* error in Stripe API example

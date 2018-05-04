@@ -1,27 +1,106 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
+  style.
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+
+  .page-header
+    h1
+      | Explore Nebraska's Resources
+
+  p.lead A collection of resources across the state, to help entrepreneurs build.
+
+  script(src=`https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js`)
+
+  #map
+
+  script.
+    var map;
+    var resources2 = !{JSON.stringify(resources)};
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 41.4925, lng: -99.9018 },
+        zoom: 7
+      });
+
+      resources2.forEach(function(sc) {
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(sc.latitude, sc.longitude),
+          map: map,
+          title: sc.location,
+          animation: google.maps.Animation.DROP,
+          info: new google.maps.InfoWindow({ content: '<div id="content">'+
+            '<h3 id="firstHeading" class="firstHeading">'+sc.name+'</h1>'+
+            '<div id="bodyContent"><h5>'+sc.grouping+'</h5>'+sc.description+'</div></div>'})
+        });
+        marker.addListener('click', function() {
+          marker.info.open(map, marker);
+        });
+      });
+    }
+
+  script(defer src=`https://maps.googleapis.com/maps/api/js?key=${google_map_api_key}&callback=initMap`)
+
   hr
   .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+    .col-md-7
+      h2 Education
+      p Resources within the university.
+      ul#education
+    .col-md-7
+      h2 Investors
+      p Funding resources, including: angels, seeds, venture capital, private equity and grants.
+      ul#investors
+    .col-md-7
+      h2 Service Providers
+      p Resources for development, design, legal, accounting, finance, insurance, content strategy, marketing, social media and PR help.
+      ul#serviceProviders
+    .col-md-7
+      h2 Associations/Nonprofits
+      p Chambers of Commerce and other groups with a focus on helping entrepreneurs.
+      ul#associations
+    .col-md-7
+      h2 Accelerators/Incubators
+      p Programs to help coach and mentor early growth.
+      ul#accelerators
+    .col-md-7
+      h2 User Groups
+      p Specialized groups leading discussions and projects on a variety of topics.
+      ul#userGroups
+    .col-md-7
+      h2 Entrepreneur Hangouts
+      p Where Nebraska entrepreneurs are getting their work done.
+      ul#hangouts
+
+  script.
+    var resources3 = !{JSON.stringify(resources)};
+
+    //- Groupings: Education, Investor, Accelerator, Association or Nonprofit, Service Provider, Entrepreneur Hangout, User Group
+    $.each(resources3, function(key, val) {
+      if(val.grouping === "Education") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#education").append($li);
+      } else if(val.grouping === "Investor") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#investors").append($li);
+      } else if(val.grouping === "Accelerator") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#accelerators").append($li);
+      } else if(val.grouping === "Association or Nonprofit") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#associations").append($li);
+      }  else if(val.grouping === "Service Provider") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#serviceProviders").append($li);
+      } else if(val.grouping === "Entrepreneur Hangout") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#hangouts").append($li);
+      } else if(val.grouping === "User Group") {
+        var $li = $("<li><a href='http://www.maps.google.com/maps?q="+val.latitude+","+val.longitude+"&z=18'>"+val.name+"</a><ul><li>"+val.description+"</li></ul>"+"</li>");
+        $("#userGroups").append($li);
+      }
+    });
